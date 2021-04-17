@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        /*
         //変換機能↓
 
-        /*
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
