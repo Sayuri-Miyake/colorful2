@@ -26,23 +26,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        /*
+
 
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String str1 = String.valueOf(tBox.getText());
-                tBox2.setText("「いろはにほへと」" + str1 + "「ゑひもせす」");
+                tBox2.setText("おかげさまで、ご紹介いただいた就職が決まりました。");
 
             }
         });
 
-         */
+
 
 
         //変換機能↓
 
+        /*
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+         */
 
 
 
