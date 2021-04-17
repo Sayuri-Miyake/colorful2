@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         Button clear = (Button) findViewById(R.id.clearButton);
         Button copy = (Button) findViewById(R.id.copyButton);
 
+
+
+        /*
+
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +37,39 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+         */
+
+
+        //変換機能↓
+
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String str1 = String.valueOf(tBox.getText());
+
+                String baseUrl = "https://www.googleapis.com/language/translate/v2?key=";
+                //APIキーの取得
+                String srcLang = "&source=ja";
+                String targetLang = "&target=en";
+                String transChar = "&q=" + str1;
+
+                String Url = baseUrl + srcLang + targetLang + transChar;
+
+
+
+                tBox2.setText("「いろはにほへと」" + str1 + "「ゑひもせす」");
+
+            }
+        });
+
+
+
+
+
+
+
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,20 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-        /*
-        copy.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                ClipboardManager copiedText = (ClipboardManager) tBox2.getSystemService
-
-            }
-        });
-
-         */
 
 
 
