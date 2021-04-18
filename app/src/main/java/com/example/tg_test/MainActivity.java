@@ -6,14 +6,43 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+
 import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Translate service;
+
+    public void getTranslateService() {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        try (InputStream is = getResources().openRawResource(R.raw.credentials)) {
+
+            //Get credentials:
+            final GoogleCredentials myCredentials = GoogleCredentials.fromStream(is);
+
+            //Set credentials and get translate service:
+            TranslateOptions translateOptions = TranslateOptions.newBuilder().setCredentials(myCredentials).build();
+            service = translateOptions.getService();
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
         Button clear = (Button) findViewById(R.id.clearButton);
         Button copy = (Button) findViewById(R.id.copyButton);
 
+        getTranslateService();
 
 
 
 
+
+        /*
         //スクショ用
         change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,12 +74,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+         */
 
 
 
 
 
-        /*
+
+
         //変換機能↓
 
         change.setOnClickListener(new View.OnClickListener() {
@@ -56,47 +90,18 @@ public class MainActivity extends AppCompatActivity {
 
                 String str1 = String.valueOf(tBox.getText());
 
-                String baseUrl = "https://www.googleapis.com/language/translate/v2?key=AIzaSyCr2OJeOaIaBYpmkPl_nQmlnpn28MRIGkQ";
-                String srcLang = "&source=ja";
-                String targetLang = "&target=en";
-                String transChar = "&q=" + str1;
+                Translation translation = service.translate(str1, Translate.TranslateOption.targetLanguage("ja"), Translate.TranslateOption.model("base"));
 
-                String Url = baseUrl + srcLang + targetLang + transChar;
-
+                String str2 = String.valueOf(tBox2.getText());
+                str2 = translation.getTranslatedText();
+                tBox2.setText(str2);
 
 
-
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet request = new HttpGet(Url);
-
-                HttpResponse httpResponse = null;
-                t ry {
-                httpResponse = httpClient.execute(request);
-                } catch (ClientProtocolException e) {
-                e.printStackTrace();
-                } catch (IOException e) {
-                e.printStackTrace();
-                }
-
-                int status = httpResponse.getStatusLine().getStatusCode();
-                if (status == 200){
-                // HTTPレスポンスから値を取り出す
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                try {
-                httpResponse.getEntity().writeTo(outputStream);
-                } catch (IOException e) {
-                e.printStackTrace();
-                }
-
-                tBox2.setText(outputStream.toString());
-                }
-
-                //tBox2.setText("「いろはにほへと」" + str1 + "「ゑひもせす」");
 
             }
         });
 
-         */
+
 
 
 
