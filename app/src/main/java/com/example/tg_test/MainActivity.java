@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //スクショ用
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         /*
         //変換機能↓
 
@@ -50,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String str1 = String.valueOf(tBox.getText());
 
-                String baseUrl = "https://www.googleapis.com/language/translate/v2?key=";
-                //APIキーの取得
+                String baseUrl = "https://www.googleapis.com/language/translate/v2?key=AIzaSyCr2OJeOaIaBYpmkPl_nQmlnpn28MRIGkQ";
                 String srcLang = "&source=ja";
                 String targetLang = "&target=en";
                 String transChar = "&q=" + str1;
@@ -60,7 +65,33 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                tBox2.setText("「いろはにほへと」" + str1 + "「ゑひもせす」");
+
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet request = new HttpGet(Url);
+
+                HttpResponse httpResponse = null;
+                t ry {
+                httpResponse = httpClient.execute(request);
+                } catch (ClientProtocolException e) {
+                e.printStackTrace();
+                } catch (IOException e) {
+                e.printStackTrace();
+                }
+
+                int status = httpResponse.getStatusLine().getStatusCode();
+                if (status == 200){
+                // HTTPレスポンスから値を取り出す
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                try {
+                httpResponse.getEntity().writeTo(outputStream);
+                } catch (IOException e) {
+                e.printStackTrace();
+                }
+
+                tBox2.setText(outputStream.toString());
+                }
+
+                //tBox2.setText("「いろはにほへと」" + str1 + "「ゑひもせす」");
 
             }
         });
