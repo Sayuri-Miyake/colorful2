@@ -59,54 +59,27 @@ public class MainActivity extends AppCompatActivity {
         getTranslateService();
 
 
-
-
-
-        /*
-        //スクショ用
-        change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String str1 = String.valueOf(tBox.getText());
-                tBox2.setText("おかげさまで、ご紹介いただいた就職が決まりました。");
-
-            }
-        });
-
-         */
-
-
-
-
-
-
-
         //変換機能↓
-
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String str1 = String.valueOf(tBox.getText());
 
-                Translation translation = service.translate(str1, Translate.TranslateOption.targetLanguage("ja"), Translate.TranslateOption.model("base"));
+                Translation translation = service.translate(str1, Translate.TranslateOption.targetLanguage("en"), Translate.TranslateOption.model("base"));
 
                 String str2 = String.valueOf(tBox2.getText());
                 str2 = translation.getTranslatedText();
+
+                Translation translation2 = service.translate(str2, Translate.TranslateOption.targetLanguage("ja"), Translate.TranslateOption.model("base"));
+                str2 = translation2.getTranslatedText();
+
                 tBox2.setText(str2);
 
 
 
             }
         });
-
-
-
-
-
-
-
 
 
 
