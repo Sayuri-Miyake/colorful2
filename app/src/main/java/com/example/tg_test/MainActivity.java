@@ -97,11 +97,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String str2 = String.valueOf(tBox2.getText());
+                String str3 = String.valueOf(tBox2.getText());
 
                 ClipboardManager clipboard = (ClipboardManager)
                         getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("変更　された　テキスト",str2);
+                ClipData clip = ClipData.newPlainText("変更されたテキスト",str3);
                 clipboard.setPrimaryClip(clip);
 
             }
